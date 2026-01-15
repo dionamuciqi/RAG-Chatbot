@@ -74,7 +74,7 @@ def build_index() -> Tuple[int, int]:
     if not settings.OPENAI_API_KEY:
         raise ValueError("OPENAI_API_KEY missing. Put it in your .env file")
 
-    print("STEP 1: API key found ✅")
+    print("STEP 1: API key found ")
     print("RAW_DIR      =", settings.RAW_DIR)
     print("CHROMA_DIR   =", settings.CHROMA_DIR)
     print("COLLECTION   =", settings.COLLECTION_NAME)
