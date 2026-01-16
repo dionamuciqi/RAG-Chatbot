@@ -11,12 +11,6 @@ from rag.config import settings
 
 
 def load_documents() -> Tuple[List, List[Tuple[str, str]]]:
-    """
-    Loads PDFs one-by-one so a single bad/encrypted PDF doesn't crash the pipeline.
-    Returns:
-      docs: list of LangChain Documents (per page)
-      failed: list of (filename, error_message)
-    """
     docs = []
     failed = []
 
@@ -30,7 +24,7 @@ def load_documents() -> Tuple[List, List[Tuple[str, str]]]:
         path = os.path.join(settings.RAW_DIR, fname)
         try:
             loader = PyPDFLoader(path)
-            file_docs = loader.load()  # one Document per page
+            file_docs = loader.load()  
 
             # Normalize metadata for citations
             for d in file_docs:

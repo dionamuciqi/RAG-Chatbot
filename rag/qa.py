@@ -6,10 +6,7 @@ from rag.prompt import SYSTEM_PROMPT, USER_TEMPLATE
 
 
 def build_context(docs):
-    """
-    Kthen chunks në një tekst të vetëm.
-    Ne i shtojmë SOURCE dhe PAGE që modeli të ketë bazë për citations.
-    """
+   
     parts = []
     for i, d in enumerate(docs, start=1):
         src = d.metadata.get("source", "unknown")
@@ -18,46 +15,57 @@ def build_context(docs):
     return "\n\n".join(parts)
 
 
+def _clean_answer(text: str) -> str:
+ 
+    if not text:
+        return text
+
+    markers = ["\nCitations:", "\nSources:", "\nReferences:"]
+    for m in markers:
+        if m in text:
+            text = text.split(m)[0].strip()
+    return text.strip()
+
+
 def answer_question(question: str):
-    """
-    1) Retrieval nga Chroma (Top-K)
-    2) Ndërton context
-    3) I dërgon OpenAI chat modelit pyetjen + context + rregullat (prompt.py)
-    4) Kthen answer + citations (si listë për UI)
-    """
-    # 1) Retrieve top-k chunks
+    # Retrieve top-k chunks
     docs = retrieve(question, k=settings.TOP_K)
 
-    # Nëse s’ka asgjë, kthe menjëherë safe response
     if not docs:
         return "I don't know based on the provided documents.", []
 
-    # 2) Build context text
+    #  Build context text
     context = build_context(docs)
 
-    # 3) Krijo LLM (OpenAI chat model)
     llm = ChatOpenAI(
         model=settings.CHAT_MODEL,
         api_key=settings.OPENAI_API_KEY,
         temperature=0.2
     )
 
-    # 4) Ndërto prompt-in final për modelin
     user_prompt = USER_TEMPLATE.format(question=question, context=context)
 
-    # 5) Thirr modelin
     response = llm.invoke([
         ("system", SYSTEM_PROMPT),
         ("user", user_prompt),
     ])
 
-    # 6) Për UI: nxjerr citations nga docs (më “reliable” se sa të lexosh tekstin e LLM)
+    answer_text = _clean_answer(response.content)
+
     citations = []
+    seen = set()
     for d in docs:
+        src = d.metadata.get("source", "unknown")
+        page = d.metadata.get("page", "?")
+        key = (src, page)
+        if key in seen:
+            continue
+        seen.add(key)
+
         citations.append({
-            "source": d.metadata.get("source", "unknown"),
-            "page": d.metadata.get("page", "?"),
+            "source": src,
+            "page": page,
             "snippet": d.page_content[:220].replace("\n", " ")
         })
 
-    return response.content, citations
+    return answer_text, citations
