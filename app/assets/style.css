@@ -1,0 +1,312 @@
+/* ================================
+   GLOBAL / STREAMLIT CHROME
+================================ */
+header[data-testid="stHeader"] { display: none; }
+footer { display: none; }
+#MainMenu { visibility: hidden; }
+
+/* ================================
+   APP BACKGROUND
+================================ */
+.stApp {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(56,189,248,0.18), transparent 35%),
+    radial-gradient(circle at 85% 10%, rgba(99,102,241,0.14), transparent 40%),
+    linear-gradient(180deg, #071521 0%, #06111a 50%, #050d14 100%);
+  color: #EAF2FF;
+}
+
+/* ================================
+   MAIN CONTAINER
+================================ */
+.block-container {
+  max-width: 1200px;
+  padding-top: 2rem;
+  padding-bottom: 7rem; /* space for fixed chat input */
+}
+
+/* ================================
+   SIDEBAR
+================================ */
+section[data-testid="stSidebar"] {
+  background: linear-gradient(
+    180deg,
+    rgba(15,40,58,0.94),
+    rgba(10,22,33,0.94)
+  );
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+section[data-testid="stSidebar"] * {
+  color: #EAF2FF !important;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+div.stButton > button {
+  width: 100%;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(
+    90deg,
+    rgba(34,211,238,0.85),
+    rgba(59,130,246,0.85)
+  );
+  color: #03101A;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(56,189,248,0.22);
+  transition: all 0.2s ease;
+}
+
+div.stButton > button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(56,189,248,0.35);
+}
+
+/* ================================
+   CHAT CONTAINER RESET
+================================ */
+div[data-testid="stChatMessage"] {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ================================
+   CHAT BUBBLES
+================================ */
+.bubble-user,
+.bubble-assistant {
+  width: 100%;
+  max-width: 880px;
+  margin: 12px auto;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  line-height: 1.45;
+  font-size: 16.5px;
+  color: #EAF2FF;
+}
+
+.bubble-user {
+  background: linear-gradient(
+    135deg,
+    rgba(34,211,238,0.22),
+    rgba(59,130,246,0.16)
+  );
+}
+
+.bubble-assistant {
+  background: rgba(255,255,255,0.085);
+}
+
+/* ================================
+   CITATIONS BOX
+================================ */
+.cites {
+  max-width: 880px;
+  margin: 6px auto 0 auto;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+.cites code {
+  background: rgba(0,0,0,0.25);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+/* ================================
+   TEXT / MARKDOWN
+================================ */
+.stMarkdown,
+.stText,
+p,
+li {
+  color: #EAF2FF !important;
+}
+
+/* ================================
+   IMAGES
+================================ */
+div[data-testid="stImage"] img {
+  border-radius: 18px;
+  padding: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+/* ================================
+   BOTTOM CONTAINERS
+================================ */
+div[data-testid="stBottom"],
+div[data-testid="stBottomBlockContainer"] {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* ================================
+   FIXED CHAT INPUT (CENTERED)
+================================ */
+div[data-testid="stChatInput"] {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(820px, calc(100% - 36px));
+  z-index: 999;
+  background: transparent;
+}
+
+div[data-testid="stChatInput"] > div {
+  width: 100%;
+  padding: 0 18px;
+  position: relative;
+}
+
+div[data-testid="stChatInput"] textarea {
+  border-radius: 999px;
+  background: #FFFFFF;
+  border: 1px solid rgba(15,23,42,0.30);
+  color: #0B1F33;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.85rem 3.2rem 0.85rem 1.15rem;
+  min-height: 54px;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.28);
+}
+
+div[data-testid="stChatInput"] textarea::placeholder {
+  color: rgba(11,31,51,0.55);
+}
+
+div[data-testid="stChatInput"] textarea:focus {
+  outline: none;
+  border: 1px solid rgba(56,189,248,0.95);
+  box-shadow:
+    0 0 0 3px rgba(56,189,248,0.20),
+    0 14px 34px rgba(0,0,0,0.28);
+}
+
+div[data-testid="stChatInput"] button {
+  position: absolute;
+  right: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 44px;
+  width: 44px;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+}
+
+div[data-testid="stChatInput"] button:hover {
+  background: rgba(15,23,42,0.06);
+}
+
+/* ================================
+   SIDEBAR SELECT / DROPDOWNS
+================================ */
+
+/* Popover container (where dropdown renders) */
+div[data-baseweb="popover"],
+div[data-baseweb="popover"] > div {
+  background: #FFFFFF !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
+
+/* The menu itself */
+div[data-baseweb="menu"] {
+  background: #FFFFFF !important;
+  color: #0B1F33 !important;
+  opacity: 1 !important;
+  border: 1px solid rgba(15,23,42,0.30) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.28) !important;
+}
+
+/* Listbox container */
+div[role="listbox"] {
+  background: #FFFFFF !important;
+  color: #0B1F33 !important;
+  opacity: 1 !important;
+}
+
+/* Each option */
+div[role="option"],
+li[role="option"] {
+  background: #FFFFFF !important;
+  color: #0B1F33 !important;
+  opacity: 1 !important;
+  font-weight: 500 !important;
+}
+
+/* Option text inside */
+div[role="option"] * ,
+li[role="option"] * {
+  color: #0B1F33 !important;
+  opacity: 1 !important;
+}
+
+/* Hover */
+div[role="option"]:hover,
+li[role="option"]:hover {
+  background: #EAF2FF !important;
+  color: #0B1F33 !important;
+}
+
+/* Selected value input area (the closed select box) */
+div[data-baseweb="select"] > div {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(15,23,42,0.30) !important;
+  border-radius: 14px !important;
+}
+
+div[data-baseweb="select"] input,
+div[data-baseweb="select"] span {
+  color: #0B1F33 !important;
+}
+
+/* ================================
+   FIX: Sidebar placeholders visibility
+ 
+================================ */
+
+/* Select / Multiselect placeholder */
+section[data-testid="stSidebar"]
+div[data-baseweb="select"] span[aria-hidden="true"] {
+  color: rgba(11, 31, 51, 0.55) !important; 
+  opacity: 1 !important;
+}
+
+/* Select input text (typed / selected) */
+section[data-testid="stSidebar"]
+div[data-baseweb="select"] span {
+  color: #0B1F33 !important;
+  opacity: 1 !important;
+}
+
+/* Number input placeholder */
+section[data-testid="stSidebar"]
+input::placeholder {
+  color: rgba(11, 31, 51, 0.55) !important;
+  opacity: 1 !important;
+}
+
+/* Number input typed value */
+section[data-testid="stSidebar"]
+input {
+  color: #0B1F33 !important;
+}

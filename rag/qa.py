@@ -1,3 +1,4 @@
+# rag/qa.py
 from langchain_openai import ChatOpenAI
 
 from rag.config import settings
@@ -6,7 +7,6 @@ from rag.prompt import SYSTEM_PROMPT, USER_TEMPLATE
 
 
 def build_context(docs):
-   
     parts = []
     for i, d in enumerate(docs, start=1):
         src = d.metadata.get("source", "unknown")
@@ -16,7 +16,6 @@ def build_context(docs):
 
 
 def _clean_answer(text: str) -> str:
- 
     if not text:
         return text
 
@@ -27,16 +26,25 @@ def _clean_answer(text: str) -> str:
     return text.strip()
 
 
-def answer_question(question: str):
-    # Retrieve top-k chunks
-    docs = retrieve(question, k=settings.TOP_K)
+def answer_question(
+    question: str,
+    chat_history: str = "",
+    filters: dict | None = None
+):
+    #  Retrieve WITH metadata filters
+    docs = retrieve(
+        query=question,
+        k=settings.TOP_K,
+        filters=filters
+    )
 
     if not docs:
         return "I don't know based on the provided documents.", []
 
-    #  Build context text
+    # Build context
     context = build_context(docs)
 
+    # LLM
     llm = ChatOpenAI(
         model=settings.CHAT_MODEL,
         api_key=settings.OPENAI_API_KEY,
@@ -45,13 +53,23 @@ def answer_question(question: str):
 
     user_prompt = USER_TEMPLATE.format(question=question, context=context)
 
-    response = llm.invoke([
-        ("system", SYSTEM_PROMPT),
-        ("user", user_prompt),
-    ])
+    # Build messages
+    messages = [("system", SYSTEM_PROMPT)]
 
+    if chat_history.strip():
+        messages.append((
+            "user",
+            "CHAT HISTORY (use only to understand follow-up questions; do NOT treat as facts):\n"
+            f"{chat_history}\n\n"
+            "Now answer the QUESTION using ONLY the CONTEXT."
+        ))
+
+    messages.append(("user", user_prompt))
+
+    response = llm.invoke(messages)
     answer_text = _clean_answer(response.content)
 
+    # Citations
     citations = []
     seen = set()
     for d in docs:
