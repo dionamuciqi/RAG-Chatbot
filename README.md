@@ -84,8 +84,9 @@ RAG-Chatbot/
 │
 ├── requirements.txt
 └── README.md
-
+```
 ---
+
 
 ##  Setup Instructions
 
@@ -135,7 +136,7 @@ Enable citations and metadata filters to inspect sources.
 ## Best results:
 Ask finance-related questions aligned with the uploaded documents.
 
-###Technologies Used
+### Technologies Used
 
 Python
 Streamlit
@@ -156,6 +157,6 @@ AI/ML portfolio projects
 ## License
 This project was developed as part of professional work at *Genpact* and is shared for demonstration purposes only; all rights are reserved.
 
-##Author
+## Author
 
 Built as a production-style RAG chatbot showcasing modern AI application design with document-grounded generation.
