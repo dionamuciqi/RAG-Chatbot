@@ -58,27 +58,29 @@ User Question -> Embedding Model -> ChromaDB Vector Store -> Relevant Chunks  ->
 ---
 
 ##  Project Structure
+
+
+```text
 RAG-Chatbot/
-│
 ├── app/
-│ ├── streamlit_app.py # Streamlit UI
-│ ├── style.css # Custom UI styles
-│ └── assets/ # Images & branding
+│   ├── streamlit_app.py   # Streamlit UI
+│   ├── style.css          # Custom UI styles
+│   └── assets/            # Images & branding
 │
 ├── rag/
-│ ├── ingest.py # PDF ingestion & chunking
-│ ├── retriever.py # ChromaDB retrieval logic
-│ ├── qa.py # RAG pipeline (retrieve + generate)
-│ ├── prompt.py # Prompt templates
-│ └── config.py # Model & path configuration
+│   ├── ingest.py          # PDF ingestion & chunking
+│   ├── retriever.py       # ChromaDB retrieval logic
+│   ├── qa.py              # RAG pipeline (retrieve + generate)
+│   ├── prompt.py          # Prompt templates
+│   └── config.py          # Model & path configuration
 │
 ├── data/
-│ ├── raw/ # Original PDF documents
-│ └── chroma/ # Persisted vector database
+│   ├── raw/               # Original PDF documents
+│   └── chroma/            # Persisted vector database
 │
 ├── docs/
-│ ├── demo_chat.png
-│ └── demo_filters.png
+│   ├── demo_chat.png
+│   └── demo_filters.png
 │
 ├── requirements.txt
 └── README.md
@@ -91,7 +93,7 @@ RAG-Chatbot/
 ```bash
 git clone https://github.com/your-username/finance-rag-chatbot.git
 cd finance-rag-chatbot
-
+```
 
 ### Create & activate virtual environment
 python -m venv .venv
